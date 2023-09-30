@@ -19,18 +19,23 @@ def get_birthdays_per_week(users:list)->dict:
         birth_day :date = user["birthday"]
         date_bd = birth_day.day, birth_day.month
         if date_bd in list(period):
-            br_dat = date(period[date_bd], birth_day.month, birth_day.day)
+            br_dat = birth_day.replace(year=period[date_bd])
             print(user["name"], br_dat, br_dat.weekday(), sep='->')
-            if br_dat.weekday() == 1:
-                result_dict["Tuesday"].append(user["name"])
-            if br_dat.weekday() == 2:
-                result_dict["Wednesday"].append(user["name"])
-            if br_dat.weekday() == 3:
-                result_dict["Thursday"].append(user["name"])
-            if br_dat.weekday() == 4:
-                result_dict["Friday"].append(user["name"])
-            if br_dat.weekday() in (0, 5, 6):
+            bd_weekday = br_dat.weekday()
+            if bd_weekday in (5, 6):
                 result_dict["Monday"].append(user["name"])
+            else:
+                result_dict[br_dat.strftime("%A")].append(user["name"])
+            # if br_dat.weekday() == 1:
+            #     result_dict["Tuesday"].append(user["name"])
+            # if br_dat.weekday() == 2:
+            #     result_dict["Wednesday"].append(user["name"])
+            # if br_dat.weekday() == 3:
+            #     result_dict["Thursday"].append(user["name"])
+            # if br_dat.weekday() == 4:
+            #     result_dict["Friday"].append(user["name"])
+            # if br_dat.weekday() in (0, 5, 6):
+            #     result_dict["Monday"].append(user["name"])
     return dict(result_dict)
             # print(period[date_bd])
 
